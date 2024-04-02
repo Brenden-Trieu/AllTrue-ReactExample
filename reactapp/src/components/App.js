@@ -43,7 +43,7 @@ const App = () => {
     }
   };
 
-  const handleUpdate = async (updatedEmployeeData) => {
+  const handleUpdateSubmit = async (updatedEmployeeData) => {
     try {
       const response = await axios.put(
         "https://dummy.restapiexample.com/api/v1/update/${id}",
@@ -60,7 +60,7 @@ const App = () => {
     }
   };
 
-  const handleEditConfirm = (employee) => {
+  const handleEditClick = (employee) => {
     setSelectedEmployee(employee);
   };
 
@@ -90,7 +90,9 @@ const App = () => {
               <td>{employee.employee_salary}</td>
               <td>{employee.employee_age}</td>
               <td>
-                <button onClick={() => handleUpdate(employee)}>Update</button>
+                <button onClick={() => handleEditClick(employee)}>
+                  Update
+                </button>
               </td>
               <td>
                 <button onClick={() => handleDelete(employee.id)}>
@@ -101,7 +103,61 @@ const App = () => {
           ))}
         </tbody>
       </table>
+      {selectedEmployee && (
+        <EmployeeForm
+          initialData={selectedEmployee}
+          onSubmit={handleUpdateSubmit}
+          onCancel={handleEditCancel}
+        />
+      )}
     </div>
+  );
+};
+
+const EmployeeForm = ({ initialData, onSubmit, onCancel }) => {
+  const [formData, setFormData] = useState(initialData);
+
+  const handleChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+    setFormData({});
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="employee_name"
+        value={formData.employee_name}
+        onChange={handleChange}
+        placeholder="Name"
+      />
+      <input
+        type="text"
+        name="employee_salary"
+        value={formData.employee_salary}
+        onChange={handleChange}
+        placeholder="Salary"
+      />
+      <input
+        type="text"
+        name="employee_age"
+        value={formData.employee_age}
+        onChange={handleChange}
+        placeholder="Age"
+      />
+      <button type="submit">Submit</button>
+      <button type="button" onClick={onCancel}>
+        Cancel
+      </button>
+    </form>
   );
 };
 
