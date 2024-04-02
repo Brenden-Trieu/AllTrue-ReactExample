@@ -18,6 +18,17 @@ const App = () => {
     fetchData();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(
+        "https://dummy.restapiexample.com/api/v1/delete/${id}"
+      );
+      setData(data.filter((employee) => employee.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (!data) {
     return <div>Loading</div>;
   }
@@ -29,6 +40,7 @@ const App = () => {
           <p>Name: {employee.employee_name}</p>
           <p>Salary: {employee.employee_salary}</p>
           <p>Age: {employee.employee_age}</p>
+          <button onClick={() => handleDelete(employee.id)}>Delete</button>
         </div>
       ))}
     </div>
