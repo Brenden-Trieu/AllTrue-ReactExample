@@ -38,6 +38,7 @@ const App = () => {
         newEmployee
       );
       setData((prevData) => [...prevData, response.data]);
+      console.log("Entry made");
     } catch (error) {
       console.log(error);
     }
@@ -55,6 +56,7 @@ const App = () => {
         )
       );
       setSelectedEmployee(null);
+      console.log("Update complete");
     } catch (error) {
       console.log(error);
     }
@@ -103,6 +105,7 @@ const App = () => {
           ))}
         </tbody>
       </table>
+      <EmployeeForm onSubmit={handleCreate} />
       {selectedEmployee && (
         <EmployeeForm
           initialData={selectedEmployee}
