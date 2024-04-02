@@ -1,36 +1,38 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function App() {
+const App = () => {
   const [data, setData] = useState();
 
-  const fetchData = async () => {
-    try {
-      const response = await axios
+  React.useEffect(() => {
+    const fetchData = () => {
+      axios
         .get("https://dummy.restapiexample.com/api/v1/employees")
-        .setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
+        .then((response) => {
+          setData(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     fetchData();
   }, []);
 
-  // if (!data) {
-  //   return <div>loading</div>;
-  // }
+  if (!data) {
+    return <div>Loading</div>;
+  }
 
   return (
-    <div className="App">
+    <div>
       {data.map((employee) => (
         <div key={employee.id}>
-          <p>{employee.name}</p>
+          <p>Name: {employee.employee_name}</p>
+          <p>Salary: {employee.employee_salary}</p>
+          <p>Age: {employee.employee_age}</p>
         </div>
       ))}
     </div>
   );
-}
+};
 
 export default App;
