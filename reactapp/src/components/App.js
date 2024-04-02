@@ -24,6 +24,7 @@ const App = () => {
         "https://dummy.restapiexample.com/api/v1/delete/${id}"
       );
       setData((prevData) => prevData.filter((employee) => employee.id !== id));
+      console.log("Entry deleted");
     } catch (error) {
       console.log(error);
     }
