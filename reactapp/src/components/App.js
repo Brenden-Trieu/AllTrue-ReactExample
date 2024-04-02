@@ -38,7 +38,7 @@ const App = () => {
         newEmployee
       );
       setData((prevData) => [...prevData, response.data]);
-      console.log("Entry made");
+      console.log("Entry created");
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +47,7 @@ const App = () => {
   const handleUpdateSubmit = async (updatedEmployeeData) => {
     try {
       const response = await axios.put(
-        "https://dummy.restapiexample.com/api/v1/update/${id}",
+        `https://dummy.restapiexample.com/api/v1/update/${updatedEmployeeData.id}`,
         updatedEmployeeData
       );
       setData((prevData) =>
@@ -118,7 +118,13 @@ const App = () => {
 };
 
 const EmployeeForm = ({ initialData, onSubmit, onCancel }) => {
-  const [formData, setFormData] = useState(initialData);
+  const [formData, setFormData] = useState(
+    initialData || {
+      employee_name: "",
+      employee_salary: "",
+      employee_age: "",
+    }
+  );
 
   const handleChange = (e) => {
     setFormData((prevData) => ({
@@ -130,7 +136,11 @@ const EmployeeForm = ({ initialData, onSubmit, onCancel }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
-    setFormData({});
+    setFormData({
+      employee_name: "",
+      employee_salary: "",
+      employee_age: "",
+    });
   };
 
   return (
