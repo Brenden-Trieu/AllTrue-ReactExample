@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        "https://dummy.restapiexample.com/api/v1/delete/${id}"
+        `https://dummy.restapiexample.com/api/v1/delete/${id}`
       );
       setData((prevData) => prevData.filter((employee) => employee.id !== id));
       console.log("Entry deleted");
