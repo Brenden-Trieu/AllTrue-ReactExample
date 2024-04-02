@@ -23,7 +23,7 @@ const App = () => {
       await axios.delete(
         "https://dummy.restapiexample.com/api/v1/delete/${id}"
       );
-      setData(data.filter((employee) => employee.id !== id));
+      setData((prevData) => prevData.filter((employee) => employee.id !== id));
     } catch (error) {
       console.log(error);
     }
